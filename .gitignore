@@ -1,0 +1,4 @@
+backup/
+
+codebase/*
+!codebase/.gitkeep

@@ -1960,20 +1960,7 @@ git config user.name  # личная подпись
      ✅ NPM      
      ✅ Git      
      🍾🥳🎉
-
   🟡 Проект      ← мы тут
-     ⚫️ Конфиги  
-     ⚫️ Линтеры  
-     ⚫️ Скрипты  
-     ⚫️ Сборка   
-     ⚫️ CI/CD    
-     ⚫️ Отладка  
-     ⚫️ Доки     
-
-  ⚫️ Инструменты
-     ⚫️ IDE
-     ⚫️ LLM
-     ⚫️ Platform
 
 ```
 
@@ -1992,27 +1979,17 @@ git config user.name  # личная подпись
 
 # Проект
 
+Пример проекта без бэкенда:
+https://ipetropolsky.github.io/continuous-calendar/
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-## Создание
-
-Проще всего: https://vite.dev/guide/
-
-```bash
-npm create vite@latest
-```
+Посмотрим:
+- Конфигурация проекта (dot-файлы, rc-файлы, env-переменные)
+- Линтеры, форматтеры, тайп-чекеры (ESLint, Prettier, tsc)
+- Обслуживающие скрипты (npm-scripts, git-хуки, утилиты)
+- Системы сборки (Vite, Rollup, Webpack)
+- CI/CD пайплайны проверки, ревью, сборки, деплоя (GitHub Actions) ⛳️
+- Средства отладки (dev-server, source maps, html-to-source)
+- Системы документирования (README, CHANGELOG, Storybook, OpenAPI)
 
 
 
@@ -2030,9 +2007,13 @@ npm create vite@latest
 
 ## Конфиги
 
-- Конфиги приложения — в основном бэкенд
+- Конфиги приложения — в основном для бэкенда
 - Конфиги инструментов
 
+Для бэкенда:
+```bash
+cp .env.example .env
+```
 
 
 
@@ -2109,6 +2090,7 @@ indent_size = 4
 indent_size = 2
 ```
 
+Обычно не меняется примерно никогда.
 
 
 
@@ -2125,6 +2107,8 @@ indent_size = 2
 
 ## Линтеры и форматтеры
 
+Работают после (или в процессе) написания кода, до сборки.
+
 Большая тройка:
 - TypeScript — типизация ⛳️
 - ESLint — правила кода
@@ -2132,6 +2116,9 @@ indent_size = 2
 
 Есть ещё Biome, линтер и форматтер 2 в 1:
 https://biomejs.dev/ru/
+
+Но он чёто сложный какой-то.
+
 
 
 
@@ -2152,6 +2139,52 @@ https://eslint.org/
 
 Ставьте 9-й, 10-й пока сырой.
 
+Пример конфига:
+```js
+import js from '@eslint/js';
+import tseslint from 'typescript-eslint';
+
+export default tseslint.config(
+    js.configs.recommended,
+
+    // Тут можно вставить готовые конфиги, в том числе HH:
+    // https://www.npmjs.com/package/@hh.ru/eslint-config
+    // ...
+
+    ...tseslint.configs.recommended,
+    {
+        rules: {
+            curly: 'error',
+        },
+    },
+    {
+        ignores: [
+            'build/**',
+            'dist/**',
+            'tools/**',
+            '**/*.cjs',
+            'package-lock.json',
+        ],
+    }
+);
+```
+
+В rules добавляем правила из доки ESLint:
+https://eslint.org/docs/latest/rules/
+
+Посмотреть конфиг для конкретного файла:
+```bash
+npx eslint --print-config src/main.tsx
+npx eslint --print-config src/main.tsx | jq .rules.curly
+```
+
+Демо
+
+
+
+### Плагин для IDE
+
+Сильно упрощает жизнь.
 
 
 
@@ -2196,6 +2229,15 @@ module.exports = {
 };
 ```
 
+Демо
+
+
+
+### Плагин для IDE
+
+Сильно упрощает жизнь.
+
+
 
 
 
@@ -2212,6 +2254,27 @@ module.exports = {
 
 ## Скрипты
 
+❓ В какой момент и как запускаются линтеры и форматтеры?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### npm-скрипты
+
 В `package.json`:
 ```bash
     "ts-check": "tsc --noEmit",
@@ -2220,8 +2283,17 @@ module.exports = {
     "format": "prettier --write --ignore-unknown .",
     "format-files": "prettier --write --ignore-unknown",
     "check": "npm run ts-check && npm run lint && npm run format",
+    "test": "bash tools/run-tests.sh",
+    "deploy": "npm run build && gh-pages -d build",
 ```
 
+```bash
+npm run check && npm run deploy
+```
+
+Демо
+
+❓ Можно не запускать это руками?
 
 
 
@@ -2236,17 +2308,11 @@ module.exports = {
 
 
 
-### `lint-staged`
+### `lint-staged` и git-хуки
+
+⚠️ Код, не прошедший проверки, не может быть закоммичен.
 
 https://github.com/lint-staged/lint-staged
-
-- Запускает указанные в конфиге команды для тех файлов,
-которые помечены в Git как staged (собираемся коммитить).
-- Передаёт в них список файлов параметрами.
-
-❓ Зачем список файлов?
-
-
 
 ```bash
 npx lint-staged --help
@@ -2255,15 +2321,28 @@ npx lint-staged --help
 Конфиг в `.lintstagedrc.js`:
 ```js
 export default {
-    '*.{ts,tsx}': [() => 'npm run ts-check', 'npm run lint-files'],
+    '*.{ts,tsx}': [
+        // Функция, ts-check запустился БЕЗ параметров
+        () => 'npm run ts-check',
+        'npm run lint-files',
+    ],
     '*.{js,jsx}': ['npm run lint-files'],
     '*': ['npm run format-files'],
 };
 ```
 
+- Запускает указанные в конфиге команды для тех файлов,
+которые помечены в Git как staged (собираемся коммитить).
+- Передаёт в них список файлов параметрами.
+- Если там функция, передаёт в аргументах.
+
+❓ Зачем список файлов?
+
+
+
 Для `src/App.tsx` и `README.md` будет запущено:
 ```bash
-npm run ts-check  # нет параметров, потому что функция
+npm run ts-check  # без параметров, потому что функция
 npm run lint-files src/App.tsx  # маска исключает *.md
 npm run format-files src/App.tsx README.md
 ```
@@ -2274,6 +2353,7 @@ git add .
 npx lint-staged -v
 ```
 
+Демо
 
 
 
@@ -2288,21 +2368,28 @@ npx lint-staged -v
 
 
 
-## Автоформатирование при коммите
 
+### Автоформатирование при коммите
+
+Нам потребуется git-hook `pre-commit`:
 https://git-scm.com/book/ms/v2/Customizing-Git-Git-Hooks
 
-Скрипт `postinstall` в `package.json` ставит git-хук:
+Скрипт `postinstall` в `package.json` ставит хук:
 ```json
   "scripts": {
     "postinstall": "cp tools/githooks/* .git/hooks || true",
   }
 ```
 
+❓ Зачем true?
+
+
+
 Хук запускает `lint-staged` перед коммитом:
 ```bash
 #!/bin/sh
-npm run lint-staged
+set -e
+npx lint-staged
 ```
 
 Хук нужно сделать исполняемым файлом:
@@ -2319,6 +2406,361 @@ chmod +x tools/githooks/pre-commit
 
 
 
+
+
+
+
+
+## Сборка
+
+
+
+### Проблема №1: стандарты и фичи
+
+- Хотим писать код по новым классным стандартам.
+- Хотим новые браузерные фичи, которые не везде работают.
+- Хотим TypeScript и JSX (в принципе невозможно в браузере).
+- Хотим препроцессоры CSS с удобными функциями.
+
+Нужно транспилировать код в более старый и добавить полифиллов.
+
+❓ Что такое полифилл?
+
+
+
+
+
+
+
+
+
+
+### Проблема №2: импорты
+
+- Хотим дробить код на мелкие модули.
+- Хотим загружать модули не по одному, а бандлами.
+- Хотим иногда подгружать бандлы динамически.
+- Хотим шарить модули между бандлами.
+- Хотим шарить библиотеки между микрофронтами.
+
+Управлять этим вручную — близко к невозможному.
+
+
+
+
+
+
+
+
+
+
+### Проблема №3: размер
+
+- Не хотим грузить лишнего на клиенте.
+- Хотим обфускацию, манглинг и другие слова.
+- При этом вместо `if(!!a)f(b,c.d);` хотим писать так:
+```js
+if (employerIds.length > 0) {
+    displayBanner({
+        name: PROMO_BANNER_NAME,
+        variant: BannerVariant.HalfSize,
+    });
+}
+```
+
+Нужно сжимать всё автоматом и применять оптимизации.
+
+Демо
+
+
+
+
+
+
+
+
+
+
+
+
+
+### Решение: бандлер
+
+В 2026-м лидер на рынке — Vite.
+
+https://vite.dev/guide/
+
+Создать проект:
+```bash
+npm create vite@latest
+```
+
+dev-server:
+```bash
+npm run dev
+```
+
+Собрать проект:
+```bash
+npm run build
+```
+
+Что в папке:
+```
+$ tree
+.
+├── assets
+│   ├── index-B7cEdw9c.css
+│   └── index-xQDg6Kg0.js
+└── index.html
+
+2 directories, 3 files
+```
+
+
+#### Проверим 🧐
+
+Соберём в dev-режиме и запустим обычный сервер:
+```bash
+NODE_ENV=development npm run build
+
+cd build
+python -m http.server
+```
+
+Идём на http://localhost:8000/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### Решение для JS: SWC
+
+В прошлом использовали Babel, и сейчас он ещё много где.
+
+https://swc.rs/playground
+https://play.swc.rs/?version=1.15.13&code=H4sIAAAAAAAAA21Qu27DMAzc9RVEFieD492O6xTZs%2FUDFJl2hdqkQUlFAcP%2FXklJ06HlQPBxvCNp54XFwwoXJm8pcHAXPSH1WmCDQXiG4lwZjjBC8q76iysapSx5lEEbhDeHAquCaIvwYCfs6keejPSMNTgvlsYmVze1KYVfeY0eBx0mD0Mg4y0TvC7LPkTGOvMeHkSGyflMBS2k9vFH6piLXQfFlVNY3DUEfRCC%2FXONU28%2FwUzauWtEtbvZUvleOiOIBLexvGnzMQoH6ncvz6E8%2BM%2BfklC7Jr9B9Qs%2FVVHknh6aeOQ3HTd01WsBAAA%3D&config=H4sIAAAAAAAAA32UO3LjMAyG%2B5zCozpFJsUWOcB2ewYOLYIysxShIUDHmozvviAlPzaG3En48AMkAOL7ZbfrPqnvPnbf8ik%2Fk80E%2BfovFpoT25NYOp4noD6HibvXC2WqiHOBZjkvoGObB%2BAqAnp%2Fe39bBV1EJFgFq2kMKfj5PmOP45SB6M4mVolYRkhczd5Ggtd7lvGL%2Fovb7HvECDY9IcaSCYlhgKwF7jFGOxGYo81KlHpSmwOhlqLCwuDMlHFSeXKBAybJ%2BUgdWGd6dKCgkKHncARNJrlElkiup9ynYQf7Mgytyz%2FUcLSxWFZywqm1RE6rRD1gIDa%2BJK2EC9yowQLX4v5UBm8ycMnpUfeJIW305C%2BAVCBaomRH0OI2Dy%2FztKX2T5UheRlZnhUu463dMsEgRTUheKWytTKQOWjdzOBKD7WyvXacFW%2BUj4IDA97LrCih6Stwf9CS1meOXgHSX%2Bu1qVqAub7CDV4fxBP8W27J%2BoCtHqPlwzaledxjfJJgBD6ge%2BIgrWDcxlm2xGna5iU5kNEAp7oUauBxCcgDYDSxrcuH2ZDnIRHNEHF%2FWxOrw%2Fm6hUebhtt7Xzbxy%2BrQjehKg%2BuKr%2F1dNvOv7uZ02cKXE3SB%2FlyELef5HwwXgCstBgAA
+
+SWC — Speedy Web Compiler:
+- Транспилирует новый JS / TS / JSX в JS указанного стандарта
+- Смысл — получить совместимый с браузерами код
+- Написан на Rust (обычно это значит быстро)
+
+В `vite.config.js`:
+```js
+    build: {
+        // Всё что уже принято или почти принято в стандарт
+        target: 'esnext',
+        outDir: 'build',
+    },
+```
+
+Трансформация (требует полифил regenerator ~2KB gzip):
+```js
+// Было (ES2017)
+async function fetchUser() {
+  const res = await fetch('/api/user');
+  return res.json();
+}
+
+// Стало (ES5) — regeneratorRuntime
+function fetchUser() {
+  return regeneratorRuntime.async(function(_context) {
+    while (1) switch (_context.prev = _context.next) {
+      case 0:
+        _context.next = 2;
+        return regeneratorRuntime.awrap(fetch('/api/user'));
+      case 2:
+        return _context.abrupt("return", _context.sent.json());
+      case 3:
+    }
+  }, null, null, null, Promise);
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### Решение для CSS: Browserslist, PostCSS, Autoprefixer
+
+https://browsersl.ist
+https://browsersl.ist/#q=last+2+versions%0A%3E+0.5%25%0Anot+dead%0A%0A
+
+Указываем в `.browserslistrc` версии браузеров:
+```
+last 2 versions
+> 0.5%
+not dead
+```
+
+Проверка:
+```bash
+npm ls browserslist
+npm ls postcss
+npm ls autoprefixer
+
+# Список точных версий браузеров по конфигу
+npx browserslist
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Как это работает:
+- PostCSS реализует систему плагинов и постпроцессинга для CSS
+- Autoprefixer делает код совместимым с браузерами из конфига
+- Caniuse: https://caniuse.com/?search=appearance
+
+В основном добавляются вендорные префиксы:
+```css
+/* Было */
+.custom-select {
+  appearance: none;
+}
+
+/* Стало */
+.custom-select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+```
+
+Что реально трансформировалось:
+```bash
+grep -Eo '(\-webkit-|\-moz-|\-ms-)[a-z-]+' build/assets/*.css | head -20
+
+-webkit-hyphens
+-moz-orient
+-webkit-text-size-adjust
+-moz-tab-size
+-webkit-tap-highlight-color
+-webkit-text-decoration
+-webkit-text-decoration
+-moz-focusring
+-moz-placeholder
+-webkit-appearance
+-moz-placeholder
+-moz-placeholder
+-webkit-search-decoration
+-webkit-appearance
+-webkit-date-and-time-value
+-webkit-datetime-edit
+-webkit-datetime-edit-fields-wrapper
+-webkit-datetime-edit
+-webkit-datetime-edit-year-field
+-webkit-datetime-edit-month-field
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### Деплой в Github-pages
+
+https://pages.github.com/
+
+Суперудобный вариант деплоя статического проекта.
+
+Установка пакета:
+```bash
+npm install -D gh-pages
+```
+
+Скрипт в `package.json`:
+```json
+  "scripts": {
+    "deploy": "npm run build && gh-pages -d build"    
+  },
+```
+
+Запуск:
+```bash
+npm run deploy
+```
+
+- Статика из папки `build` заливается в ветку `gh-pages`
+- Ветка пушится на GitHub, где настроен урл именно на неё
+- На эту ветку смотрит адрес вида `USERNAME.github.io/REPO_NAME`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# LLM Агенты
+
+Пара советов, как организовать работу.
+
+## Документация
+
+- Критический минимум + оглавление со ссылками в AGENTS.md
+- Симлинк с AGENTS.md на CLAUDE.md, если у вас Claude
+- Всё что формализуется выносите в доку и скиллы
+
+## Процесс
+
+- Для ненакомой задачи всегда отдельное планирование
+- Не обязательно добиваться идеального результата
+- Часто проще зарезетить и начать заново с лучшим контекстом
+- Коммитить лучше руками после обзора изменений
+
+## Модели
+
+- Они реально отличаются, и не ЧБ, а оттенками
+- Планировать лучше более умной, делать по плану можно простой
 
 
 

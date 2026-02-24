@@ -1712,27 +1712,6 @@ npm install
 
 
 
-## Убрать страшный дифф от lock-файлов
-
-`.gitattributes`:
-```bash
-package-lock.json  binary
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ```
 
@@ -1997,6 +1976,340 @@ git config user.name  # личная подпись
      ⚫️ Platform
 
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Проект
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Создание
+
+Проще всего: https://vite.dev/guide/
+
+```bash
+npm create vite@latest
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Конфиги
+
+- Конфиги приложения — в основном бэкенд
+- Конфиги инструментов
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### `.npmrc`
+
+Ставить точные версии:
+```
+save-exact=true
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### Убрать страшный дифф от lock-файлов
+
+`.gitattributes`:
+```bash
+package-lock.json  binary
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### `.editorconfig`
+
+Настройки, которые подхватывают большинство редакторов и IDE:
+https://editorconfig.org/
+
+```
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 4
+
+[*.json]
+indent_size = 2
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Линтеры и форматтеры
+
+Большая тройка:
+- TypeScript — типизация ⛳️
+- ESLint — правила кода
+- Prettier — форматирование кода
+
+Есть ещё Biome, линтер и форматтер 2 в 1:
+https://biomejs.dev/ru/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### ESLint
+
+https://eslint.org/
+
+Ставьте 9-й, 10-й пока сырой.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### Prettier
+
+https://prettier.io/
+
+Форматтер кода с минимальными настройками.
+Подключается во все редакторы.
+
+```bash
+yarn add -D prettier
+```
+
+Конфиг в `.prettierrc.js`:
+```js
+module.exports = {
+    singleQuote: true,
+    trailingComma: 'es5',
+    arrowParens: 'always',
+    printWidth: 120,
+    tabWidth: 4,
+    overrides: [
+        {
+            files: ['*.json'],
+            options: {
+                semi: true,
+                tabWidth: 2,
+            },
+        },
+    ],
+};
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Скрипты
+
+В `package.json`:
+```bash
+    "ts-check": "tsc --noEmit",
+    "lint": "eslint --fix .",
+    "lint-files": "eslint --fix",
+    "format": "prettier --write --ignore-unknown .",
+    "format-files": "prettier --write --ignore-unknown",
+    "check": "npm run ts-check && npm run lint && npm run format",
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### `lint-staged`
+
+https://github.com/lint-staged/lint-staged
+
+- Запускает указанные в конфиге команды для тех файлов,
+которые помечены в Git как staged (собираемся коммитить).
+- Передаёт в них список файлов параметрами.
+
+❓ Зачем список файлов?
+
+
+
+```bash
+npx lint-staged --help
+```
+
+Конфиг в `.lintstagedrc.js`:
+```js
+export default {
+    '*.{ts,tsx}': [() => 'npm run ts-check', 'npm run lint-files'],
+    '*.{js,jsx}': ['npm run lint-files'],
+    '*': ['npm run format-files'],
+};
+```
+
+Для `src/App.tsx` и `README.md` будет запущено:
+```bash
+npm run ts-check  # нет параметров, потому что функция
+npm run lint-files src/App.tsx  # маска исключает *.md
+npm run format-files src/App.tsx README.md
+```
+
+Проверка:
+```bash
+git add .
+npx lint-staged -v
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Автоформатирование при коммите
+
+https://git-scm.com/book/ms/v2/Customizing-Git-Git-Hooks
+
+Скрипт `postinstall` в `package.json` ставит git-хук:
+```json
+  "scripts": {
+    "postinstall": "cp tools/githooks/* .git/hooks || true",
+  }
+```
+
+Хук запускает `lint-staged` перед коммитом:
+```bash
+#!/bin/sh
+npm run lint-staged
+```
+
+Хук нужно сделать исполняемым файлом:
+```bash
+chmod +x tools/githooks/pre-commit
+```
+
 
 
 

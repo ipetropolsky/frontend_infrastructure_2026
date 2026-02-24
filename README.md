@@ -17,6 +17,8 @@
 
 📣 Вопросы в чате — кто последит?
 
+☕️ Перерыв
+
 💬 После лекции: чат ~frontend
 
 🔴 Включена запись 👀
@@ -40,6 +42,8 @@
 Начнём издалека, для общего понимания:
 - Мы веб-разработчики
 - Мы разрабатываем веб-сервисы
+
+
 
 
 
@@ -1980,10 +1984,11 @@ git config user.name  # личная подпись
 # Проект
 
 Пример проекта без бэкенда:
-https://ipetropolsky.github.io/continuous-calendar/
+- https://ipetropolsky.github.io/continuous-calendar/
+- https://github.com/ipetropolsky/continuous-calendar
 
-Посмотрим:
-- Конфигурация проекта (dot-файлы, rc-файлы, env-переменные)
+Обсудим:
+- Конфигурацию проекта (dot-файлы, rc-файлы, env-переменные)
 - Линтеры, форматтеры, тайп-чекеры (ESLint, Prettier, tsc)
 - Обслуживающие скрипты (npm-scripts, git-хуки, утилиты)
 - Системы сборки (Vite, Rollup, Webpack)
@@ -2293,7 +2298,17 @@ npm run check && npm run deploy
 
 Демо
 
-❓ Можно не запускать это руками?
+
+
+
+
+
+
+
+
+
+
+❓ Можно не запускать это для всех файлов?
 
 
 
@@ -2308,7 +2323,7 @@ npm run check && npm run deploy
 
 
 
-### `lint-staged` и git-хуки
+### `lint-staged`
 
 ⚠️ Код, не прошедший проверки, не может быть закоммичен.
 
@@ -2364,17 +2379,43 @@ npx lint-staged -v
 
 
 
+❓ Можно не запускать это руками?
 
 
 
 
 
-### Автоформатирование при коммите
+
+
+
+
+
+
+
+
+
+### Автолинтинг и форматирование при коммите
 
 Нам потребуется git-hook `pre-commit`:
 https://git-scm.com/book/ms/v2/Customizing-Git-Git-Hooks
 
-Скрипт `postinstall` в `package.json` ставит хук:
+❓ Как установить его каждому разработчику?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+В `package.json` есть скрипт `postinstall`, он ставит хук:
 ```json
   "scripts": {
     "postinstall": "cp tools/githooks/* .git/hooks || true",
@@ -2412,6 +2453,21 @@ chmod +x tools/githooks/pre-commit
 
 
 ## Сборка
+
+Зачем собирать проект?
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2458,19 +2514,22 @@ chmod +x tools/githooks/pre-commit
 
 - Не хотим грузить лишнего на клиенте.
 - Хотим обфускацию, манглинг и другие слова.
-- При этом вместо `if(!!a)f(b,c.d);` хотим писать так:
-```js
-if (employerIds.length > 0) {
-    displayBanner({
-        name: PROMO_BANNER_NAME,
-        variant: BannerVariant.HalfSize,
-    });
-}
-```
+- Хотим писать так:
+  ```js
+  if (employerIds.length > 0) {
+      displayBanner({
+          name: PROMO_BANNER_NAME,
+          variant: BannerVariant.HalfSize,
+      });
+  }
+  ```
+- А на проде чтобы было так: `if(!!a)f(b,c.d);`
+
+
 
 Нужно сжимать всё автоматом и применять оптимизации.
 
-Демо
+
 
 
 
@@ -2495,7 +2554,23 @@ https://vite.dev/guide/
 npm create vite@latest
 ```
 
-dev-server:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### Наш проект тоже на Vite
+
+Запустить dev-server:
 ```bash
 npm run dev
 ```
@@ -2546,8 +2621,6 @@ python -m http.server
 
 ### Решение для JS: SWC
 
-В прошлом использовали Babel, и сейчас он ещё много где.
-
 https://swc.rs/playground
 https://play.swc.rs/?version=1.15.13&code=H4sIAAAAAAAAA21Qu27DMAzc9RVEFieD492O6xTZs%2FUDFJl2hdqkQUlFAcP%2FXklJ06HlQPBxvCNp54XFwwoXJm8pcHAXPSH1WmCDQXiG4lwZjjBC8q76iysapSx5lEEbhDeHAquCaIvwYCfs6keejPSMNTgvlsYmVze1KYVfeY0eBx0mD0Mg4y0TvC7LPkTGOvMeHkSGyflMBS2k9vFH6piLXQfFlVNY3DUEfRCC%2FXONU28%2FwUzauWtEtbvZUvleOiOIBLexvGnzMQoH6ncvz6E8%2BM%2BfklC7Jr9B9Qs%2FVVHknh6aeOQ3HTd01WsBAAA%3D&config=H4sIAAAAAAAAA32UO3LjMAyG%2B5zCozpFJsUWOcB2ewYOLYIysxShIUDHmozvviAlPzaG3En48AMkAOL7ZbfrPqnvPnbf8ik%2Fk80E%2BfovFpoT25NYOp4noD6HibvXC2WqiHOBZjkvoGObB%2BAqAnp%2Fe39bBV1EJFgFq2kMKfj5PmOP45SB6M4mVolYRkhczd5Ggtd7lvGL%2Fovb7HvECDY9IcaSCYlhgKwF7jFGOxGYo81KlHpSmwOhlqLCwuDMlHFSeXKBAybJ%2BUgdWGd6dKCgkKHncARNJrlElkiup9ynYQf7Mgytyz%2FUcLSxWFZywqm1RE6rRD1gIDa%2BJK2EC9yowQLX4v5UBm8ycMnpUfeJIW305C%2BAVCBaomRH0OI2Dy%2FztKX2T5UheRlZnhUu463dMsEgRTUheKWytTKQOWjdzOBKD7WyvXacFW%2BUj4IDA97LrCih6Stwf9CS1meOXgHSX%2Bu1qVqAub7CDV4fxBP8W27J%2BoCtHqPlwzaledxjfJJgBD6ge%2BIgrWDcxlm2xGna5iU5kNEAp7oUauBxCcgDYDSxrcuH2ZDnIRHNEHF%2FWxOrw%2Fm6hUebhtt7Xzbxy%2BrQjehKg%2BuKr%2F1dNvOv7uZ02cKXE3SB%2FlyELef5HwwXgCstBgAA
 
@@ -2555,6 +2628,8 @@ SWC — Speedy Web Compiler:
 - Транспилирует новый JS / TS / JSX в JS указанного стандарта
 - Смысл — получить совместимый с браузерами код
 - Написан на Rust (обычно это значит быстро)
+
+В прошлом использовали Babel, и сейчас он ещё много где.
 
 В `vite.config.js`:
 ```js
@@ -2752,15 +2827,57 @@ npm run deploy
 
 ## Процесс
 
-- Для ненакомой задачи всегда отдельное планирование
+- Набор env-файлов с разными ключами и моделями
+- Для незнакомой задачи всегда отдельное планирование
 - Не обязательно добиваться идеального результата
 - Часто проще зарезетить и начать заново с лучшим контекстом
 - Коммитить лучше руками после обзора изменений
+- Посмотрите на claude-action для GitHub, если есть возможность
 
 ## Модели
 
 - Они реально отличаются, и не ЧБ, а оттенками
 - Планировать лучше более умной, делать по плану можно простой
+- Anthropic, GLM, из чат-ботов ChatGPT (личное мнение)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Сервисы
+
+
+
+## GitHub Gist
+
+Для заметок и хранения кода:
+https://codepen.io/ipetropolsky-hh/pen/gOVXavR
+
+
+
+## CodePen
+
+Для тестирования связки HTML+CSS+JS:
+https://gist.github.com/ipetropolsky/de00874119d6622be969b6af265da3aa
+
+Пропроцессоры, TS, всё есть, даже npm-пакеты.
+
+
+
+## Регулярные выражения
+
+- Супер удобная вещь, которой многие боятся.
+- Тестировать можно тут: https://regex101.com/
+
 
 
 

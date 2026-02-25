@@ -41,6 +41,48 @@
 
 
 
+## Содержание
+
+### Окружение
+
+- [Docker](#docker-logo) — воспроизводимое окружение
+- [Shell](#shell-logo) — командная строка, терминал
+- [Bash](#bash-logo) — скрипты автоматизации
+- [SSH](#ssh-logo) — удалённый доступ
+- [NodeJS](#nodejs-logo) — JavaScript вне браузера
+- [NPM](#npm-logo) — менеджер пакетов
+- [Git](#git-logo) — контроль версий
+
+### Проект
+
+- [Конфиги](#configs-logo) — настройка проекта
+- [Линтеры и форматтеры](#linters-logo) — ESLint, Prettier
+- [Скрипты](#scripts-logo) — npm-scripts, git-hooks
+- [Сборка](#build-logo) — Vite, SWC, PostCSS
+- [Деплой](#deploy-logo) — gh-pages, GitHub Actions
+- [LLM Агенты](#llm-logo) — работа с AI
+- [Рекомендую](#recommend-logo) — полезные сервисы
+
+### Домашка
+
+- [Задание](#homework-logo)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+<a id="what-is-infra"></a>
 # Что за инфраструктура
 
 Начнём издалека, для общего понимания:
@@ -61,6 +103,7 @@
 
 
 
+<a id="page-load"></a>
 ## Page Load Lifecycle
 
 В общем случае задача любого веб-сервиса:
@@ -82,6 +125,7 @@
 
 
 
+<a id="http-request"></a>
 ### HTTP-запрос
 
 - Метод: GET | POST | PUT | DELETE | ...
@@ -90,10 +134,16 @@
 - Заголовки запроса (Accept, Cookie, ...)
 - Тело запроса (опционально)
 
+
+
+<a id="server-work"></a>
 ### Работа сервера
 
 - Тут работает то, что накодил бэкенд
 
+
+
+<a id="server-response"></a>
 ### Ответ сервера
 
 - Статус (200 OK, 404 Not Found, ...)
@@ -113,6 +163,7 @@
 
 
 
+<a id="dev-layers"></a>
 ## Что вообще бывает в разработке
 
 1) **Продуктовый код**             — ценность для пользователя
@@ -138,6 +189,7 @@
 
 
 
+<a id="infra-definition"></a>
 ## Скучное определение (одно из)
 
 Инфраструктура — это слой инструментов и автоматизаций,
@@ -157,6 +209,7 @@
 
 
 
+<a id="frontend-roadmap"></a>
 ## Путь фронтендера
 
 https://roadmap.sh/frontend
@@ -177,12 +230,14 @@ https://roadmap.sh/frontend
 
 
 
+<a id="frontend-infra"></a>
 # Инфраструктура фронтенда (и не только)
 
 > ⛳️ – есть отдельная лекция, не будем углубляться
 
 
 
+<a id="env-section"></a>
 ## ⚙️ Окружение
 
 - Infrastructure as Code, IaC (Docker, Ansible) ⛳️
@@ -195,6 +250,7 @@ https://roadmap.sh/frontend
 
 
 
+<a id="project-section"></a>
 ## 💻 Проект
 
 - Конфигурация проекта (dot-файлы, rc-файлы, env-переменные)
@@ -207,6 +263,7 @@ https://roadmap.sh/frontend
 
 
 
+<a id="dev-tools"></a>
 ## 👀 Инструменты разработки
 
 - Для написания кода (IDE)
@@ -227,17 +284,18 @@ https://roadmap.sh/frontend
 
 
 ---
+<a id="docker"></a>
 ```
 
-  🟡 Окружение   
+  🟡 Окружение
      🟡 Docker   ← мы тут
-     ⚫️ Shell    
-     ⚫️ Bash     
-     ⚫️ SSH      
-     ⚫️ NodeJS   
-     ⚫️ NPM      
-     ⚫️ Git      
-  ⚫️ Проект      
+     ⚫️ Shell
+     ⚫️ Bash
+     ⚫️ SSH
+     ⚫️ NodeJS
+     ⚫️ NPM
+     ⚫️ Git
+  ⚫️ Проект
 
 ```
 
@@ -254,22 +312,22 @@ https://roadmap.sh/frontend
 
 
 
-
+<a id="docker-logo"></a>
 ```
 
 
-                                                     
-    ██████╗  ██████╗  ██████╗██╗  ██╗███████╗██████╗ 
+    ██████╗  ██████╗  ██████╗██╗  ██╗███████╗██████╗
     ██╔══██╗██╔═══██╗██╔════╝██║ ██╔╝██╔════╝██╔══██╗
     ██║  ██║██║   ██║██║     █████╔╝ █████╗  ██████╔╝
     ██║  ██║██║   ██║██║     ██╔═██╗ ██╔══╝  ██╔══██╗
     ██████╔╝╚██████╔╝╚██████╗██║  ██╗███████╗██║  ██║
     ╚═════╝  ╚═════╝  ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
-                                           Контейнеры
+                                          Контейнеры
 
-                                                     
+
 ```
 
+<a id="docker-intro"></a>
 # Docker — воспроизводимое окружение
 
 https://www.docker.com/
@@ -293,6 +351,7 @@ https://www.docker.com/
 
 
 
+<a id="dockerfile"></a>
 ## Dockerfile — инструкции для создания образа
 
 Дока:
@@ -320,6 +379,7 @@ https://github.com/ipetropolsky/docker
 
 
 
+<a id="docker-demo"></a>
 ## Демо
 
 1) Собираем и запускаем контейнер.
@@ -347,6 +407,7 @@ RUN echo 'echo "Hello, $(whoami)"!' >> /home/hh/.bashrc
 
 
 
+<a id="docker-run"></a>
 ## Запуск с готовым образом
 
 https://hub.docker.com/ — реестр образов
@@ -438,17 +499,18 @@ docker rmi node-local
 
 
 ---
+<a id="shell"></a>
 ```
 
-  🟡 Окружение   
-     ✅ Docker   
+  🟡 Окружение
+     ✅ Docker
      🟡 Shell    ← мы тут
-     ⚫️ Bash     
-     ⚫️ SSH      
-     ⚫️ NodeJS   
-     ⚫️ NPM      
-     ⚫️ Git      
-  ⚫️ Проект      
+     ⚫️ Bash
+     ⚫️ SSH
+     ⚫️ NodeJS
+     ⚫️ NPM
+     ⚫️ Git
+  ⚫️ Проект
 
 ```
 
@@ -466,6 +528,7 @@ docker rmi node-local
 
 
 
+<a id="shell-logo"></a>
 ```
 
                                            
@@ -482,6 +545,7 @@ docker rmi node-local
                                             
 ```
 
+<a id="shell-intro"></a>
 # Shell, командная строка, CLI, терминал, консоль
 
 ## Shell
@@ -501,12 +565,14 @@ ssh host 'echo $TERM'  # dumb
 
 
 
+<a id="cli"></a>
 ## CLI (Command Line Interface)
 
 Набор команд для шелла, антоним GUI (например, git)
 
 
 
+<a id="command-line"></a>
 ## Командная строка (Command Line)
 
 Интерактивный интерфейс для ввода команд:
@@ -514,6 +580,7 @@ ssh host 'echo $TERM'  # dumb
 
 
 
+<a id="terminal"></a>
 ## Терминал (консоль)
 
 Чёрное окно с командной строкой:
@@ -536,6 +603,7 @@ ssh host 'echo $TERM'  # dumb
 
 
 
+<a id="shell-chatgpt"></a>
 ## ChatGPT
 
 ```
@@ -561,6 +629,7 @@ ssh host 'echo $TERM'  # dumb
 
 
 
+<a id="shell-variants"></a>
 ## Варианты шелла (интерпретатора)
 
 - `sh` — скорость и лёгкость за счёт функций
@@ -595,6 +664,7 @@ echo $0  # /bin/bash — путь к бинарнику
 
 
 
+<a id="shell-setup"></a>
 ## Настройка командной строки
 
 1) Переменные окружения (env-переменные):
@@ -649,6 +719,7 @@ https://github.com/ipetropolsky/bash-setup
 
 
 
+<a id="shell-advanced-setup"></a>
 ### Настройка посерьёзнее
 
 - https://ohmyz.sh/ (zsh)
@@ -670,17 +741,18 @@ https://github.com/ipetropolsky/bash-setup
 
 
 ---
+<a id="bash"></a>
 ```
 
-  🟡 Окружение   
-     ✅ Docker   
-     ✅ Shell    
+  🟡 Окружение
+     ✅ Docker
+     ✅ Shell
      🟡 Bash     ← мы тут
-     ⚫️ SSH      
-     ⚫️ NodeJS   
-     ⚫️ NPM      
-     ⚫️ Git      
-  ⚫️ Проект      
+     ⚫️ SSH
+     ⚫️ NodeJS
+     ⚫️ NPM
+     ⚫️ Git
+  ⚫️ Проект
 
 ```
 
@@ -698,6 +770,7 @@ https://github.com/ipetropolsky/bash-setup
 
 
 
+<a id="bash-logo"></a>
 ```
 
                                   
@@ -711,6 +784,7 @@ https://github.com/ipetropolsky/bash-setup
                                   
 ```
 
+<a id="bash-intro"></a>
 # Bash — Bourne Again SHell
 
 - Самый популярный шелл
@@ -733,6 +807,7 @@ https://github.com/ipetropolsky/bash-setup
 
 
 
+<a id="bash-debug"></a>
 ## Справка и отладка
 
 - `--version`
@@ -780,6 +855,7 @@ printf 'Hello from %s, #%s!\n' "$(uname)" $UID
 
 
 
+<a id="bash-files"></a>
 ## Файлы и каталоги
 
 - `~`, `.`, `..`, `/`
@@ -815,6 +891,7 @@ rm -rf dist
 
 
 
+<a id="bash-io"></a>
 ## Чтение и запись
 
 - `stdin` (0)
@@ -861,6 +938,7 @@ less build.log
 
 
 
+<a id="bash-search"></a>
 ## Поиск
 
 - `find . -name "*.md"`
@@ -893,6 +971,7 @@ grep -REoh 'process\.env\.[A-Z_]+' src | sort -u
 
 
 
+<a id="bash-exec"></a>
 ## Запуск и права
 
 - `. filename`
@@ -930,6 +1009,7 @@ sudo chown -R $USER:$USER node_modules
 
 
 
+<a id="bash-requests"></a>
 ## Запросы
 
 - `curl`
@@ -961,6 +1041,7 @@ curl -s https://example.com | grep -Eo '[a-z]+: ?#[a-z0-9]+'
 
 
 
+<a id="bash-control"></a>
 ## Управление
 
 - Комбинирование команд: `&&`, `||`, `if`, `for`, `while`
@@ -1002,17 +1083,18 @@ SCORE=$RANDOM && [ "$SCORE" -gt 16384 ] && echo "$SCORE: You win"! || echo "$SCO
 
 
 ---
+<a id="ssh"></a>
 ```
 
-  🟡 Окружение   
-     ✅ Docker   
-     ✅ Shell    
-     ✅ Bash     
+  🟡 Окружение
+     ✅ Docker
+     ✅ Shell
+     ✅ Bash
      🟡 SSH      ← мы тут
-     ⚫️ NodeJS   
-     ⚫️ NPM      
-     ⚫️ Git      
-  ⚫️ Проект      
+     ⚫️ NodeJS
+     ⚫️ NPM
+     ⚫️ Git
+  ⚫️ Проект
 
 ```
 
@@ -1030,6 +1112,7 @@ SCORE=$RANDOM && [ "$SCORE" -gt 16384 ] && echo "$SCORE: You win"! || echo "$SCO
 
 
 
+<a id="ssh-logo"></a>
 ```
 
                                   
@@ -1045,6 +1128,7 @@ SCORE=$RANDOM && [ "$SCORE" -gt 16384 ] && echo "$SCORE: You win"! || echo "$SCO
                                   
 ```
 
+<a id="ssh-intro"></a>
 # SSH — Secure SHell (данные шифруются)
 
 - Управление удалёнными компьютерами через терминал
@@ -1105,6 +1189,7 @@ ssh-add ~/.ssh/my_key_ed25519
 
 
 
+<a id="ssh-config"></a>
 ## SSH-конфиг
 
 `~/.ssh/config`:
@@ -1148,6 +1233,7 @@ ssh -G ts32
 
 
 
+<a id="ssh-sync"></a>
 ## Синхронизация файлов
 
 - `scp` для простых случаев
@@ -1186,17 +1272,18 @@ rsync -av --delete dist/ user@server:/var/www/app
 
 
 ---
+<a id="nodejs"></a>
 ```
 
-  🟡 Окружение   
-     ✅ Docker   
-     ✅ Shell    
-     ✅ Bash     
-     ✅ SSH      
+  🟡 Окружение
+     ✅ Docker
+     ✅ Shell
+     ✅ Bash
+     ✅ SSH
      🟡 NodeJS   ← мы тут
-     ⚫️ NPM      
-     ⚫️ Git      
-  ⚫️ Проект      
+     ⚫️ NPM
+     ⚫️ Git
+  ⚫️ Проект
 
 ```
 
@@ -1214,6 +1301,7 @@ rsync -av --delete dist/ user@server:/var/www/app
 
 
 
+<a id="nodejs-logo"></a>
 ```
 
                                                    
@@ -1227,6 +1315,7 @@ rsync -av --delete dist/ user@server:/var/www/app
 
 ```
 
+<a id="nodejs-intro"></a>
 # NodeJS — JavaScript вне браузера
 
 - Основа npm и всей фронтенд-инфраструктуры
@@ -1289,6 +1378,7 @@ NodeJS:
 
 
 
+<a id="nvm"></a>
 ## `nvm` — менеджер версий NodeJS
 
 https://github.com/nvm-sh/nvm
@@ -1349,6 +1439,7 @@ node -v  # 25
 
 
 
+<a id="n-manager"></a>
 ## `n` — менеджер версий NodeJS
 
 https://github.com/tj/n
@@ -1391,17 +1482,18 @@ node -v # 23
 
 
 ---
+<a id="npm"></a>
 ```
 
-  🟡 Окружение   
-     ✅ Docker   
-     ✅ Shell    
-     ✅ Bash     
-     ✅ SSH      
-     ✅ NodeJS   
+  🟡 Окружение
+     ✅ Docker
+     ✅ Shell
+     ✅ Bash
+     ✅ SSH
+     ✅ NodeJS
      🟡 NPM      ← мы тут
-     ⚫️ Git      
-  ⚫️ Проект      
+     ⚫️ Git
+  ⚫️ Проект
 
 ```
 
@@ -1419,6 +1511,7 @@ node -v # 23
 
 
 
+<a id="npm-logo"></a>
 ```
 
 
@@ -1436,6 +1529,7 @@ node -v # 23
 
 ```
 
+<a id="npm-intro"></a>
 # NPM — Node Package Manager
 
 https://www.npmjs.com/
@@ -1461,6 +1555,7 @@ https://www.npmjs.com/
 
 
 
+<a id="npm-config"></a>
 ## `npm config`
 
 https://docs.npmjs.com/cli/v11/commands/npm-config
@@ -1498,6 +1593,7 @@ npm config ls -l
 
 
 
+<a id="npm-init"></a>
 ## `npm init` — создание пустого проекта
 
 ```bash
@@ -1535,6 +1631,7 @@ npm init  # заполняем поля
 
 
 
+<a id="npm-packages"></a>
 ## Использование пакетов
 
 Рандомный пакет с npmjs:
@@ -1576,6 +1673,7 @@ node index.js  # ошибка, нет такого пакета
 
 
 
+<a id="npm-install"></a>
 ## `npm install` — установка зависимостей
 
 ```bash
@@ -1621,6 +1719,7 @@ npm remove @texel/color
 
 
 
+<a id="package-json"></a>
 ## `package.json` — паспорт пакета для экосистемы NodeJS
 
 - https://nodejs.org/api/packages.html
@@ -1650,6 +1749,7 @@ npm remove @texel/color
 
 
 
+<a id="semver"></a>
 ## Система версий
 
 https://semver.org
@@ -1707,6 +1807,7 @@ npm install "@hh.ru/eslint-config@<18"
 
 
 
+<a id="package-lock"></a>
 ## `package-lock.json` — фиксация версий
 
 Проблема: версия в зависимостях: `^2.1.0`
@@ -1737,6 +1838,7 @@ npm install package-name@2.5.0
 
 
 
+<a id="npm-exact-versions"></a>
 ## Ставить всегда фиксированные версии
 
 С помощью `npm config`.
@@ -1771,6 +1873,7 @@ save-exact=true
 
 
 
+<a id="npm-troubleshooting"></a>
 ## Решение проблем с зависимостями
 
 Начните с последнего пункта. Если не поможет,
@@ -1804,7 +1907,7 @@ npm install
 
 
 
-
+<a id="npx-logo"></a>
 ```
 
      _____
@@ -1819,6 +1922,7 @@ npm install
 
 ```
 
+<a id="npx"></a>
 ## NPX — запуск пакетов без установки
 
 https://docs.npmjs.com/cli/v11/commands/npx
@@ -1849,17 +1953,18 @@ npx cowsay NPX
 
 
 ---
+<a id="git"></a>
 ```
 
-  🟡 Окружение   
-     ✅ Docker   
-     ✅ Shell    
-     ✅ Bash     
-     ✅ SSH      
-     ✅ NodeJS   
-     ✅ NPM      
+  🟡 Окружение
+     ✅ Docker
+     ✅ Shell
+     ✅ Bash
+     ✅ SSH
+     ✅ NodeJS
+     ✅ NPM
      🟡 Git      ← мы тут
-  ⚫️ Проект      
+  ⚫️ Проект
 
 ```
 
@@ -1876,6 +1981,7 @@ npx cowsay NPX
 
 
 
+<a id="git-logo"></a>
 ```
 
 
@@ -1890,6 +1996,7 @@ npx cowsay NPX
 
 ```
 
+<a id="git-intro"></a>
 # Git — контроль версий
 
 - Git — лучшее изобретение человечества после Linux (это не точно).
@@ -1911,6 +2018,7 @@ npx cowsay NPX
 
 
 
+<a id="git-signing"></a>
 ## Подпись коммитов
 
 https://docs.github.com/en/authentication/managing-commit-signature-verification
@@ -1968,6 +2076,7 @@ gc 'Message'
 
 
 
+<a id="git-config"></a>
 ## Git config
 
 Нельзя хранить в репозитории, только локально.
@@ -2054,16 +2163,17 @@ git config user.name  # личная подпись
 
 
 ---
+<a id="project"></a>
 ```
 
-  ✅ Окружение   
-     ✅ Docker   
-     ✅ Shell    
-     ✅ Bash     
-     ✅ SSH      
-     ✅ NodeJS   
-     ✅ NPM      
-     ✅ Git      
+  ✅ Окружение
+     ✅ Docker
+     ✅ Shell
+     ✅ Bash
+     ✅ SSH
+     ✅ NodeJS
+     ✅ NPM
+     ✅ Git
      🍾🥳🎉
   🟡 Проект      ← мы тут
 
@@ -2082,6 +2192,7 @@ git config user.name  # личная подпись
 
 
 
+<a id="project-intro"></a>
 # Проект
 
 Пример проекта без бэкенда:
@@ -2111,20 +2222,21 @@ git config user.name  # личная подпись
 
 
 ---
+<a id="configs"></a>
 ```
 
-  ✅ Окружение   
-  🟡 Проект      
+  ✅ Окружение
+  🟡 Проект
      🟡 Конфиги  ← мы тут
-     ⚫️ Линтеры  
-     ⚫️ Скрипты  
-     ⚫️ Сборка   
-     ⚫️ Деплой   
-     ⚫️ Агенты   
-     ⚫️ Сервисы  
+     ⚫️ Линтеры
+     ⚫️ Скрипты
+     ⚫️ Сборка
+     ⚫️ Деплой
+     ⚫️ Агенты
+     ⚫️ Сервисы
 
 ```
-
+<a id="configs-logo"></a>
 ```
 
                                        
@@ -2139,6 +2251,7 @@ git config user.name  # личная подпись
 
 ```
 
+<a id="configs-intro"></a>
 # Конфиги
 
 - Конфиги приложения — в основном для бэкенда
@@ -2162,6 +2275,7 @@ cp .env.example .env
 
 
 
+<a id="npmrc-project"></a>
 ## `.npmrc`
 
 Ставить точные версии:
@@ -2184,6 +2298,7 @@ registry=https://...
 
 
 
+<a id="lockfile-diff"></a>
 ## Убрать страшный дифф от lock-файлов
 
 `.gitattributes`:
@@ -2205,6 +2320,7 @@ package-lock.json  binary
 
 
 
+<a id="editorconfig"></a>
 ## `.editorconfig`
 
 Настройки, которые подхватывают большинство редакторов и IDE:
@@ -2241,21 +2357,21 @@ indent_size = 2
 
 
 ---
-
+<a id="linters"></a>
 ```
 
-  ✅ Окружение   
-  🟡 Проект      
-     ⚫️ Конфиги  
+  ✅ Окружение
+  🟡 Проект
+     ⚫️ Конфиги
      🟡 Линтеры  ← мы тут
-     ⚫️ Скрипты  
-     ⚫️ Сборка   
-     ⚫️ Деплой   
-     ⚫️ Агенты   
-     ⚫️ Сервисы  
+     ⚫️ Скрипты
+     ⚫️ Сборка
+     ⚫️ Деплой
+     ⚫️ Агенты
+     ⚫️ Сервисы
 
 ```
-
+<a id="linters-logo"></a>
 ```
 
   ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -2266,6 +2382,7 @@ indent_size = 2
 
 ```
 
+<a id="linters-intro"></a>
 # Линтеры и форматтеры
 
 Работают после (или в процессе) написания кода, до сборки.
@@ -2294,6 +2411,7 @@ https://biomejs.dev/ru/
 
 
 
+<a id="eslint"></a>
 ## ESLint
 
 https://eslint.org/
@@ -2359,6 +2477,7 @@ npx eslint --print-config src/main.tsx | jq .rules.curly
 
 
 
+<a id="prettier"></a>
 ## Prettier
 
 https://prettier.io/
@@ -2414,21 +2533,21 @@ module.exports = {
 
 
 ---
-
+<a id="scripts"></a>
 ```
 
-  ✅ Окружение   
-  🟡 Проект      
-     ⚫️ Конфиги  
-     ⚫️ Линтеры  
+  ✅ Окружение
+  🟡 Проект
+     ⚫️ Конфиги
+     ⚫️ Линтеры
      🟡 Скрипты  ← мы тут
-     ⚫️ Сборка   
-     ⚫️ Деплой   
-     ⚫️ Агенты   
-     ⚫️ Сервисы  
+     ⚫️ Сборка
+     ⚫️ Деплой
+     ⚫️ Агенты
+     ⚫️ Сервисы
 
 ```
-
+<a id="scripts-logo"></a>
 ```
 
 
@@ -2441,6 +2560,7 @@ module.exports = {
 
 ```
 
+<a id="scripts-intro"></a>
 # Скрипты
 
 > ❓ В какой момент и как запускаются линтеры и форматтеры?
@@ -2462,6 +2582,7 @@ module.exports = {
 
 
 
+<a id="npm-scripts"></a>
 ## npm-скрипты
 
 В `package.json`:
@@ -2507,6 +2628,7 @@ npm run check && npm run deploy
 
 
 
+<a id="lint-staged"></a>
 ## `lint-staged`
 
 ⚠️ Код, не прошедший проверки, не может быть закоммичен.
@@ -2578,6 +2700,7 @@ npx lint-staged -v
 
 
 
+<a id="auto-linting"></a>
 ## Автолинтинг и форматирование при коммите
 
 Нам потребуется git-hook `pre-commit`:
@@ -2637,21 +2760,21 @@ chmod +x tools/githooks/pre-commit
 
 
 ---
-
+<a id="build"></a>
 ```
 
-  ✅ Окружение   
-  🟡 Проект      
-     ⚫️ Конфиги  
-     ⚫️ Линтеры  
-     ⚫️ Скрипты  
+  ✅ Окружение
+  🟡 Проект
+     ⚫️ Конфиги
+     ⚫️ Линтеры
+     ⚫️ Скрипты
      🟡 Сборка   ← мы тут
-     ⚫️ Деплой   
-     ⚫️ Агенты   
-     ⚫️ Сервисы  
+     ⚫️ Деплой
+     ⚫️ Агенты
+     ⚫️ Сервисы
 
 ```
-
+<a id="build-logo"></a>
 ```
  
                                                         
@@ -2670,6 +2793,7 @@ chmod +x tools/githooks/pre-commit
                        
 ```
 
+<a id="build-intro"></a>
 # Сборка
 
 Зачем собирать проект?
@@ -2689,6 +2813,7 @@ chmod +x tools/githooks/pre-commit
 
 
 
+<a id="build-problem-1"></a>
 ## Проблема №1: стандарты и фичи
 
 - Хотим писать код по новым классным стандартам.
@@ -2709,6 +2834,7 @@ chmod +x tools/githooks/pre-commit
 
 
 
+<a id="build-problem-2"></a>
 ## Проблема №2: импорты
 
 - Хотим дробить код на мелкие модули.
@@ -2728,6 +2854,7 @@ chmod +x tools/githooks/pre-commit
 
 
 
+<a id="build-problem-3"></a>
 ## Проблема №3: размер
 
 - Не хотим грузить лишнего на клиенте.
@@ -2761,6 +2888,7 @@ chmod +x tools/githooks/pre-commit
 
 
 
+<a id="bundler"></a>
 ## Решение: бандлер
 
 В 2026-м лидер на рынке — Vite.
@@ -2786,6 +2914,7 @@ npm create vite@latest
 
 
 
+<a id="build-demo"></a>
 ## Посмотрим на тестовом проекте
 
 Запустить dev-server:
@@ -2837,6 +2966,7 @@ python -m http.server
 
 
 
+<a id="swc"></a>
 ## Решение для JS: SWC
 
 https://swc.rs/playground
@@ -2895,6 +3025,7 @@ function fetchUser() {
 
 
 
+<a id="postcss"></a>
 ## Решение для CSS: Browserslist, PostCSS, Autoprefixer
 
 https://browsersl.ist
@@ -2930,8 +3061,9 @@ npx browserslist
 
 
 
+<a id="how-postcss-works"></a>
+### Как это работает
 
-Как это работает:
 - PostCSS реализует систему плагинов и постпроцессинга для CSS
 - Autoprefixer делает код совместимым с браузерами из конфига
 - Caniuse: https://caniuse.com/?search=appearance
@@ -2951,7 +3083,11 @@ npx browserslist
 }
 ```
 
-Что реально трансформировалось:
+
+
+<a id="check-transforms"></a>
+### Что реально трансформировалось
+
 ```bash
 grep -Eo '(\-webkit-|\-moz-|\-ms-)[a-z-]+' build/assets/*.css | head -20
 
@@ -2991,41 +3127,43 @@ grep -Eo '(\-webkit-|\-moz-|\-ms-)[a-z-]+' build/assets/*.css | head -20
 
 
 ---
-
+<a id="deploy"></a>
 ```
 
-  ✅ Окружение   
-  🟡 Проект      
-     🟡 Конфиги  ← мы тут
-     ⚫️ Линтеры  
-     ⚫️ Скрипты  
-     ⚫️ Сборка   
-     ⚫️ Деплой   
-     ⚫️ Агенты   
-     ⚫️ Сервисы  
+  ✅ Окружение
+  🟡 Проект
+     ⚫️ Конфиги
+     ⚫️ Линтеры
+     ⚫️ Скрипты
+     ⚫️ Сборка
+     🟡 Деплой   ← мы тут
+     ⚫️ Агенты
+     ⚫️ Сервисы
 
 ```
-
+<a id="deploy-logo"></a>
 ```
 
 
-░███████                         ░██                       
-░██   ░██                        ░██                       
-░██    ░██  ░███████  ░████████  ░██  ░███████  ░██    ░██ 
-░██    ░██ ░██    ░██ ░██    ░██ ░██ ░██    ░██ ░██    ░██ 
-░██    ░██ ░█████████ ░██    ░██ ░██ ░██    ░██ ░██    ░██ 
-░██   ░██  ░██        ░███   ░██ ░██ ░██    ░██ ░██   ░███ 
-░███████    ░███████  ░██░█████  ░██  ░███████   ░█████░██ 
-                      ░██                              ░██ 
-                      ░██                        ░███████  
+    ░███████                         ░██                       
+    ░██   ░██                        ░██                       
+    ░██    ░██  ░███████  ░████████  ░██  ░███████  ░██    ░██ 
+    ░██    ░██ ░██    ░██ ░██    ░██ ░██ ░██    ░██ ░██    ░██ 
+    ░██    ░██ ░█████████ ░██    ░██ ░██ ░██    ░██ ░██    ░██ 
+    ░██   ░██  ░██        ░███   ░██ ░██ ░██    ░██ ░██   ░███ 
+    ░███████    ░███████  ░██░█████  ░██  ░███████   ░█████░██ 
+                          ░██                              ░██ 
+                          ░██                        ░███████  
                                                                                                                   
 
 ```
 
+<a id="deploy-intro"></a>
 # Деплой
 
 
 
+<a id="gh-pages"></a>
 ## Деплой в Github-pages
 
 https://pages.github.com/
@@ -3071,6 +3209,7 @@ npm run deploy
 
 
 
+<a id="github-actions"></a>
 ## GitHub Actions
 
 https://github.com/features/actions
@@ -3096,6 +3235,7 @@ https://github.com/features/actions
 
 
 
+<a id="workflow-example"></a>
 ### Пример воркфлоу
 
 Деплой в gh-pages при появлении коммита в master:
@@ -3171,6 +3311,7 @@ jobs:
 
 
 
+<a id="claude-action"></a>
 ### Изюминка на вашем торте 🤌
 
 ✨ Claude Code GitHub Actions:
@@ -3191,21 +3332,21 @@ https://code.claude.com/docs/en/github-actions
 
 
 ---
-
+<a id="llm"></a>
 ```
 
-  ✅ Окружение   
-  🟡 Проект      
-     ⚫️ Конфиги  ← мы тут
-     ⚫️ Линтеры  
-     ⚫️ Скрипты  
-     ⚫️ Сборка   
-     ⚫️ Деплой   
-     🟡 Агенты   
-     ⚫️ Сервисы  
+  ✅ Окружение
+  🟡 Проект
+     ⚫️ Конфиги
+     ⚫️ Линтеры
+     ⚫️ Скрипты
+     ⚫️ Сборка
+     ⚫️ Деплой
+     🟡 Агенты   ← мы тут
+     ⚫️ Сервисы
 
 ```
-
+<a id="llm-logo"></a>
 ```
 
 
@@ -3223,16 +3364,22 @@ https://code.claude.com/docs/en/github-actions
 
 ```
 
+<a id="llm-intro"></a>
 # LLM Агенты
 
 Пара советов, как организовать работу.
 
+
+<a id="llm-docs"></a>
 ## Документация
 
 - В AGENTS.md критический минимум + ссылки на остальное
 - Симлинк с CLAUDE.md на AGENTS.md, если у вас Claude
 - Всё что формализуется выносите в доку и скиллы
 
+
+
+<a id="llm-workflow"></a>
 ## Процесс
 
 - Набор env-файлов с разными ключами и моделями
@@ -3244,6 +3391,9 @@ https://code.claude.com/docs/en/github-actions
 - Обязательно пропишите правила и команды для запуска линтеров
 - Всё что можно сделать скриптом, лучше сделать скриптом
 
+
+
+<a id="llm-models"></a>
 ## Модели
 
 - Они реально отличаются, и не ЧБ, а оттенками
@@ -3264,21 +3414,21 @@ https://code.claude.com/docs/en/github-actions
 
 
 ---
-
+<a id="recommend"></a>
 ```
 
-  ✅ Окружение   
-  🟡 Проект      
-     ⚫️ Конфиги  ← мы тут
-     ⚫️ Линтеры  
-     ⚫️ Скрипты  
-     ⚫️ Сборка   
-     ⚫️ Деплой   
-     ⚫️ Агенты   
-     🟡 Сервисы  
+  ✅ Окружение
+  🟡 Проект
+     ⚫️ Конфиги
+     ⚫️ Линтеры
+     ⚫️ Скрипты
+     ⚫️ Сборка
+     ⚫️ Деплой
+     ⚫️ Агенты
+     🟡 Сервисы  ← мы тут
 
 ```
-
+<a id="recommend-logo"></a>
 ```
 
 
@@ -3293,10 +3443,12 @@ https://code.claude.com/docs/en/github-actions
 
 ```
 
+<a id="recommend-intro"></a>
 # Рекомендую
 
 
 
+<a id="github-gist"></a>
 ## GitHub Gist
 
 Для заметок и хранения кода:
@@ -3304,6 +3456,7 @@ https://gist.github.com/ipetropolsky/e711303b9f6fb7a169d51988006f18bf
 
 
 
+<a id="codepen"></a>
 ## CodePen или аналоги
 
 Для тестирования связки HTML+CSS+JS:
@@ -3315,6 +3468,7 @@ https://codepen.io/ipetropolsky-hh/pen/gOVXavR
 
 
 
+<a id="regex"></a>
 ## Регулярные выражения
 
 - Супер удобная вещь, которой многие боятся.
@@ -3335,22 +3489,22 @@ https://codepen.io/ipetropolsky-hh/pen/gOVXavR
 
 
 ---
-
+<a id="homework"></a>
 ```
 
-  ✅ Окружение   
-  ✅ Проект      
-     ✅ Конфиги  ← мы тут
-     ✅ Линтеры  
-     ✅ Скрипты  
-     ✅ Сборка   
-     ✅ Деплой    
-     ✅ Агенты   
-     ✅ Сервисы  
+  ✅ Окружение
+  ✅ Проект
+     ✅ Конфиги
+     ✅ Линтеры
+     ✅ Скрипты
+     ✅ Сборка
+     ✅ Деплой
+     ✅ Агенты
+     ✅ Сервисы
      🍾💃🕺
 
 ```
-
+<a id="homework-logo"></a>
 ```
                             
 
@@ -3366,6 +3520,7 @@ https://codepen.io/ipetropolsky-hh/pen/gOVXavR
                                         
 ```
 
+<a id="homework-intro"></a>
 # Домашка
 
 Сделайте репозиторий, в котором настроены основные инструменты:
@@ -3384,6 +3539,7 @@ https://codepen.io/ipetropolsky-hh/pen/gOVXavR
 
 
 
+<a id="previous-lectures"></a>
 ## Предыдущие лекции
 
 Другой контент, возможно что-то пригодится:

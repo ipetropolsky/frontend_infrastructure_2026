@@ -340,7 +340,7 @@ https://roadmap.sh/frontend
 <a id="docker-intro"></a>
 # Docker — воспроизводимое окружение
 
-https://www.docker.com/
+https://www.docker.com
 
 - Контейнер = изолированное приложение + все его зависимости
 - Окружение работает одинаково на любой машине
@@ -365,7 +365,7 @@ https://www.docker.com/
 ## Dockerfile — инструкции для создания образа
 
 Дока:
-https://docs.docker.com/reference/dockerfile/
+https://docs.docker.com/reference/dockerfile
 
 Примеры:
 https://github.com/ipetropolsky/docker
@@ -420,7 +420,7 @@ RUN echo 'echo "Hello, $(whoami)"!' >> /home/hh/.bashrc
 <a id="docker-run"></a>
 ## Запуск с готовым образом
 
-https://hub.docker.com/ — реестр образов
+https://hub.docker.com — реестр образов
 
 ```bash
 # Запуск контейнера с NodeJS
@@ -732,9 +732,9 @@ https://github.com/ipetropolsky/bash-setup
 <a id="shell-advanced-setup"></a>
 ### Настройка посерьёзнее
 
-- https://ohmyz.sh/ (zsh)
-- https://ohmyposh.dev/ (bash)
-- https://starship.rs/ (all)
+- https://ohmyz.sh (zsh)
+- https://ohmyposh.dev (bash)
+- https://starship.rs (all)
 
 
 
@@ -1542,7 +1542,7 @@ node -v # 23
 <a id="npm-intro"></a>
 # NPM — Node Package Manager
 
-https://www.npmjs.com/
+https://www.npmjs.com
 
 - Управление зависимостями
 - The world's largest software registry ©
@@ -2207,7 +2207,7 @@ git config user.name  # личная подпись
 # Проект
 
 Пример проекта без бэкенда:
-- https://ipetropolsky.github.io/continuous-calendar/
+- https://ipetropolsky.github.io/continuous-calendar
 - https://github.com/ipetropolsky/continuous-calendar
 
 Обсудим:
@@ -2335,7 +2335,7 @@ package-lock.json  binary
 ## `.editorconfig`
 
 Настройки, которые подхватывают большинство редакторов и IDE:
-https://editorconfig.org/
+https://editorconfig.org
 
 ```
 root = true
@@ -2404,7 +2404,7 @@ indent_size = 2
 - Prettier — форматирование кода
 
 Есть ещё Biome, линтер и форматтер 2 в 1:
-https://biomejs.dev/ru/
+https://biomejs.dev/ru
 
 Но он чёто сложный какой-то.
 
@@ -2425,7 +2425,7 @@ https://biomejs.dev/ru/
 <a id="eslint"></a>
 ## ESLint
 
-https://eslint.org/
+https://eslint.org
 
 Ставьте 9-й, 10-й пока сырой.
 
@@ -2460,7 +2460,7 @@ export default tseslint.config(
 ```
 
 В rules добавляем правила из доки ESLint:
-https://eslint.org/docs/latest/rules/
+https://eslint.org/docs/latest/rules
 
 Посмотреть конфиг для конкретного файла:
 ```bash
@@ -2491,7 +2491,7 @@ npx eslint --print-config src/main.tsx | jq .rules.curly
 <a id="prettier"></a>
 ## Prettier
 
-https://prettier.io/
+https://prettier.io
 
 Форматтер кода с минимальными настройками.
 Подключается во все редакторы.
@@ -2913,7 +2913,7 @@ chmod +x tools/githooks/pre-commit
 
 В 2026-м лидер на рынке — Vite.
 
-https://vite.dev/guide/
+https://vite.dev/guide
 
 Создать проект:
 ```bash
@@ -2970,7 +2970,7 @@ cd build
 python -m http.server
 ```
 
-Идём на http://localhost:8000/
+Идём на http://localhost:8000
 
 
 
@@ -3109,7 +3109,7 @@ npx browserslist
 ### Что реально трансформировалось
 
 ```bash
-grep -Eo '(\-webkit-|\-moz-|\-ms-)[a-z-]+' build/assets/*.css | head -20
+grep -Eo '\-(webkit|moz|ms)-[a-z-]+' build/assets/*.css | head -20
 
 -webkit-hyphens
 -moz-orient
@@ -3513,13 +3513,13 @@ https://www.sublimetext.com
 Простые примеры:
 ```regexp
 ^\d{2}-\d{2}-\d{4}$
--(webkit|moz|ms)-[a-z-]+
+\-(webkit|moz|ms)-[a-z-]+
 [a-z]+: ?#[a-z0-9]+
 ```
 
 - Супер удобная вещь, которой многие избегают
 - Используется повсеместно в grep, sed, find, IDE, etc.
-- Тестировать можно тут: https://regex101.com/
+- Тестировать можно тут: https://regex101.com
 
 
 

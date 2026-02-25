@@ -3535,6 +3535,13 @@ https://www.sublimetext.com
 
 
 
+<a id="ascii"></a>
+## ░░ ASCII-шрифты ░░
+
+https://patorjk.com/software/taag
+
+
+
 
 
 

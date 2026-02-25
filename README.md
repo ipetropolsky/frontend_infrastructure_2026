@@ -2551,12 +2551,19 @@ module.exports = {
 ```
 
 
-    __    ___ ____  __ ____  ______  __ 
-   (( \  //   || \\ || || \\ | || | (( \
-    \\  ((    ||_// || ||_//   ||    \\ 
-   \_))  \\__ || \\ || ||      ||   \_))
-   ------------------------------------- 
-   
+    #!/bin/sh                                      
+    █████████                      ███             █████           
+   ███░░░░░███                    ░░░             ░░███            
+  ░███    ░░░   ██████  ████████  ████  ████████  ███████    █████ 
+  ░░█████████  ███░░███░░███░░███░░███ ░░███░░███░░░███░    ███░░  
+   ░░░░░░░░███░███ ░░░  ░███ ░░░  ░███  ░███ ░███  ░███    ░░█████ 
+   ███    ░███░███  ███ ░███      ░███  ░███ ░███  ░███ ███ ░░░░███
+  ░░█████████ ░░██████  █████     █████ ░███████   ░░█████  ██████ 
+   ░░░░░░░░░   ░░░░░░  ░░░░░     ░░░░░  ░███░░░     ░░░░░  ░░░░░░  
+                                        ░███                       
+                                        █████                      
+                                       ░░░░░                          
+
 
 ```
 
@@ -2777,20 +2784,14 @@ chmod +x tools/githooks/pre-commit
 <a id="build-logo"></a>
 ```
  
-                                                        
-                                                        
-   █████░ █    █ ██   █ ████▒  █      ██████ █████   ▓███▒
-   █   ▒█ █    █ ██░  █ █  ▒█░ █      █      █   ▓█ █▓  ░█
-   █    █ █    █ █▒▓  █ █   ▒█ █      █      █    █ █     
-   █   ▒█ █    █ █ █  █ █    █ █      █      █   ▒█ █▓░   
-   █████░ █    █ █ ▓▓ █ █    █ █      ██████ █████   ▓██▓ 
-   █   ▒█ █    █ █  █ █ █    █ █      █      █  ░█▒     ▓█
-   █    █ █    █ █  ▓▒█ █   ▒█ █      █      █   ░█      █
-   █   ▒█ █▒  ▒█ █  ░██ █  ▒█░ █      █      █    █ █░  ▓█
-   █████░  ████  █   ██ ████▒  ██████ ██████ █    ▒ ▒████░
-                                                        
 
-                       
+▗▄▄▖ ▗▖ ▗▖▗▖  ▗▖▗▄▄▄ ▗▖   ▗▄▄▄▖▗▄▄▖  ▗▄▄▖
+▐▌ ▐▌▐▌ ▐▌▐▛▚▖▐▌▐▌  █▐▌   ▐▌   ▐▌ ▐▌▐▌   
+▐▛▀▚▖▐▌ ▐▌▐▌ ▝▜▌▐▌  █▐▌   ▐▛▀▀▘▐▛▀▚▖ ▝▀▚▖
+▐▙▄▞▘▝▚▄▞▘▐▌  ▐▌▐▙▄▄▀▐▙▄▄▖▐▙▄▄▖▐▌ ▐▌▗▄▄▞▘
+                                         
+
+
 ```
 
 <a id="build-intro"></a>
@@ -2969,8 +2970,8 @@ python -m http.server
 <a id="swc"></a>
 ## Решение для JS: SWC
 
-https://swc.rs/playground
-https://play.swc.rs/?version=1.15.13&code=H4sIAAAAAAAAA21Qu27DMAzc9RVEFieD492O6xTZs%2FUDFJl2hdqkQUlFAcP%2FXklJ06HlQPBxvCNp54XFwwoXJm8pcHAXPSH1WmCDQXiG4lwZjjBC8q76iysapSx5lEEbhDeHAquCaIvwYCfs6keejPSMNTgvlsYmVze1KYVfeY0eBx0mD0Mg4y0TvC7LPkTGOvMeHkSGyflMBS2k9vFH6piLXQfFlVNY3DUEfRCC%2FXONU28%2FwUzauWtEtbvZUvleOiOIBLexvGnzMQoH6ncvz6E8%2BM%2BfklC7Jr9B9Qs%2FVVHknh6aeOQ3HTd01WsBAAA%3D&config=H4sIAAAAAAAAA32UO3LjMAyG%2B5zCozpFJsUWOcB2ewYOLYIysxShIUDHmozvviAlPzaG3En48AMkAOL7ZbfrPqnvPnbf8ik%2Fk80E%2BfovFpoT25NYOp4noD6HibvXC2WqiHOBZjkvoGObB%2BAqAnp%2Fe39bBV1EJFgFq2kMKfj5PmOP45SB6M4mVolYRkhczd5Ggtd7lvGL%2Fovb7HvECDY9IcaSCYlhgKwF7jFGOxGYo81KlHpSmwOhlqLCwuDMlHFSeXKBAybJ%2BUgdWGd6dKCgkKHncARNJrlElkiup9ynYQf7Mgytyz%2FUcLSxWFZywqm1RE6rRD1gIDa%2BJK2EC9yowQLX4v5UBm8ycMnpUfeJIW305C%2BAVCBaomRH0OI2Dy%2FztKX2T5UheRlZnhUu463dMsEgRTUheKWytTKQOWjdzOBKD7WyvXacFW%2BUj4IDA97LrCih6Stwf9CS1meOXgHSX%2Bu1qVqAub7CDV4fxBP8W27J%2BoCtHqPlwzaledxjfJJgBD6ge%2BIgrWDcxlm2xGna5iU5kNEAp7oUauBxCcgDYDSxrcuH2ZDnIRHNEHF%2FWxOrw%2Fm6hUebhtt7Xzbxy%2BrQjehKg%2BuKr%2F1dNvOv7uZ02cKXE3SB%2FlyELef5HwwXgCstBgAA
+[SWC Playground](https://swc.rs/playground
+https://play.swc.rs/?version=1.15.13&code=H4sIAAAAAAAAA21Qu27DMAzc9RVEFieD492O6xTZs%2FUDFJl2hdqkQUlFAcP%2FXklJ06HlQPBxvCNp54XFwwoXJm8pcHAXPSH1WmCDQXiG4lwZjjBC8q76iysapSx5lEEbhDeHAquCaIvwYCfs6keejPSMNTgvlsYmVze1KYVfeY0eBx0mD0Mg4y0TvC7LPkTGOvMeHkSGyflMBS2k9vFH6piLXQfFlVNY3DUEfRCC%2FXONU28%2FwUzauWtEtbvZUvleOiOIBLexvGnzMQoH6ncvz6E8%2BM%2BfklC7Jr9B9Qs%2FVVHknh6aeOQ3HTd01WsBAAA%3D&config=H4sIAAAAAAAAA32UO3LjMAyG%2B5zCozpFJsUWOcB2ewYOLYIysxShIUDHmozvviAlPzaG3En48AMkAOL7ZbfrPqnvPnbf8ik%2Fk80E%2BfovFpoT25NYOp4noD6HibvXC2WqiHOBZjkvoGObB%2BAqAnp%2Fe39bBV1EJFgFq2kMKfj5PmOP45SB6M4mVolYRkhczd5Ggtd7lvGL%2Fovb7HvECDY9IcaSCYlhgKwF7jFGOxGYo81KlHpSmwOhlqLCwuDMlHFSeXKBAybJ%2BUgdWGd6dKCgkKHncARNJrlElkiup9ynYQf7Mgytyz%2FUcLSxWFZywqm1RE6rRD1gIDa%2BJK2EC9yowQLX4v5UBm8ycMnpUfeJIW305C%2BAVCBaomRH0OI2Dy%2FztKX2T5UheRlZnhUu463dMsEgRTUheKWytTKQOWjdzOBKD7WyvXacFW%2BUj4IDA97LrCih6Stwf9CS1meOXgHSX%2Bu1qVqAub7CDV4fxBP8W27J%2BoCtHqPlwzaledxjfJJgBD6ge%2BIgrWDcxlm2xGna5iU5kNEAp7oUauBxCcgDYDSxrcuH2ZDnIRHNEHF%2FWxOrw%2Fm6hUebhtt7Xzbxy%2BrQjehKg%2BuKr%2F1dNvOv7uZ02cKXE3SB%2FlyELef5HwwXgCstBgAA)
 
 SWC — Speedy Web Compiler:
 - Транспилирует новый JS / TS / JSX в JS указанного стандарта
@@ -3166,7 +3167,7 @@ grep -Eo '(\-webkit-|\-moz-|\-ms-)[a-z-]+' build/assets/*.css | head -20
 <a id="gh-pages"></a>
 ## Деплой в Github-pages
 
-https://pages.github.com/
+https://pages.github.com
 
 Суперудобный вариант деплоя статического проекта.
 

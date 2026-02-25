@@ -2706,6 +2706,34 @@ npx lint-staged -v
 
 > Демо
 
+```bash
+$ git commit -m 'HH-12345 Change button color'
+
+✔ Preparing...
+⚠ Running tasks...
+  ❯ eslint --fix [FAILED]
+    ✖ eslint --fix [FAILED]
+  ✔ Running tasks for *.{ts,tsx,d.ts}
+  ↓ No staged files match *.less [SKIPPED]
+  ↓ No staged files match package.json [SKIPPED]
+  ✔ Running tasks for *.py
+  ↓ No staged files match scripts/sql/trans/*.sql [SKIPPED]
+  ↓ No staged files match *.md [SKIPPED]
+  ✔ Running tasks for *
+  ↓ No staged files match *.xsl [SKIPPED]
+  ↓ No staged files match pyproject.toml [SKIPPED]
+↓ Skipped because of errors from tasks. [SKIPPED]
+✔ Reverting to original state because of errors...
+✔ Cleaning up...
+
+✖ eslint --fix:
+
+src/components/ProductSection/Product/index.tsx
+  24:47  error  'Variant' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+
+✖ 1 problem (1 error, 0 warnings)
+
+```
 
 
 

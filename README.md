@@ -1687,6 +1687,11 @@ node index.js  # ошибка, нет такого пакета
 <a id="npm-install"></a>
 ## `npm install` — установка зависимостей
 
+- Запускаем каждый раз когда скачиваем или обновляем репозиторий
+- Запускаем когда нужно добавить или обновить зависимость
+- Запускаем когда нужно выполнить postinstall-сетап пакета
+- В `node_modules` устанавливаются зависимости из `package.json`
+
 ```bash
 npm install --help
 
@@ -2603,16 +2608,23 @@ module.exports = {
 <a id="npm-scripts"></a>
 ## npm-скрипты
 
-В `package.json`:
+Пример из `package.json` (команды могут отличаться):
 ```bash
+    # Обычный набор
+    "dev": "vite",
+    "build": "vite build",
+    "deploy": "npm run build && gh-pages -d build",
+    "test": "bash tools/run-tests.sh",
+    "postinstall": "cp tools/githooks/* .git/hooks || true"
+
+    # Линтеры
     "ts-check": "tsc --noEmit",
     "lint": "eslint --fix .",
     "lint-files": "eslint --fix",
     "format": "prettier --write --ignore-unknown .",
     "format-files": "prettier --write --ignore-unknown",
     "check": "npm run ts-check && npm run lint && npm run format",
-    "test": "bash tools/run-tests.sh",
-    "deploy": "npm run build && gh-pages -d build",
+    "lint-staged": "lint-staged",
 ```
 
 ```bash

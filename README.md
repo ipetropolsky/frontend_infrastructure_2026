@@ -2477,12 +2477,106 @@ npx eslint --print-config src/main.tsx | jq .rules.curly
 
 
 
-## Плагин для IDE
+### Плагин для IDE
 
 Сильно упрощает жизнь.
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+<a id="import-sorting"></a>
+### Сортировка импортов
+
+https://www.npmjs.com/package/eslint-plugin-simple-import-sort
+
+- Разделяет импорты на группы и сортирует по алфавиту
+- Удобно, наглядно, нет бардака, а главное: не надо думать
+- В двух ветках добавляется одинаковый импорт => нет конфликта
+- Есть такая функция в IDE, но у коллеги выключено или другая IDE
+
+Пример отсортированных импортов (только без комментов):
+```ts
+// Frameworks
+import { ReactNode, useCallback } from 'react';
+
+// Libs
+import classnames from 'classnames';
+import { Button, Card, Text, Title, VSpacing } from '@hh.ru/magritte-ui';
+
+// Project
+import { AnimatedPrice } from 'src/components/AnimatedPrice';
+import { translation } from 'src/components/translation';
+import { useSelectorNonNullable } from 'src/hooks/useSelector';
+import { MINUS, NON_BREAKING_SPACE } from 'src/utils/constants/symbols';
+```
+
+Установка:
+```bash
+npm install --save-dev eslint-plugin-simple-import-sort
+```
+
+Пример конфига (настройте группы как нравится):
+```js
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
+
+export default tseslint.config(
+    // ...
+    {
+        plugins: {
+            'simple-import-sort': simpleImportSort,
+        },
+        rules: {
+            // ...
+            'simple-import-sort/imports': [
+                'error',
+                {
+                    groups: [
+                        // React и экосистема:
+                        //   import React from 'react'
+                        //   import ReactDOM from 'react-dom'
+                        //   import { createStore } from 'redux'
+                        //   import { configureStore } from '@reduxjs/toolkit'
+                        ['^react', '^react-', '^redux', '^redux-', '^@reduxjs/'],
+
+                        // Внешние пакеты (npm-модули):
+                        //   import lodash from 'lodash'
+                        //   import axios from 'axios'
+                        //   import Button from '@mui/Button'
+                        ['^@?\\w'],
+
+                        // Внутренние алиасы и абсолютные пути:
+                        //   import { utils } from '@/utils'
+                        //   import Header from 'components/Header'
+                        ['^@', '^'],
+
+                        // Относительные импорты (избегайте этого, используйте алиасы: '@/src/config' или 'src/config'):
+                        //   import config from './config'
+                        //   import styles from './styles.less'
+                        //   import { helper } from '../utils'
+                        ['^\\./'],
+
+                        // Сторонние импорты с побочными эффектами:
+                        //   import 'polyfills' (без присваивания)
+                        ['^\\u0000'],
+                    ],
+                },
+            ],
+            'simple-import-sort/exports': 'off',
+        },
+    },
+    // ...
+);
+```
 
 
 
@@ -2529,7 +2623,7 @@ module.exports = {
 
 
 
-## Плагин для IDE
+### Плагин для IDE
 
 Сильно упрощает жизнь.
 
